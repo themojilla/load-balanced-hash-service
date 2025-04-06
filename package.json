@@ -1,0 +1,64 @@
+{
+  "name": "load-balanced-hash-service",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint:format": "npx prettier --write",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "argon2": "^0.41.1",
+    "express": "^4.21.2",
+    "pino": "^9.6.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "autocannon": "^8.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  },
+  "private": true,
+  "lint-staged": {
+    "*.{ts,json,md}": "pnpm lint:format"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "type-enum": [
+        2,
+        "always",
+        [
+          "feat",
+          "fix",
+          "docs",
+          "style",
+          "refactor",
+          "perf",
+          "test",
+          "build",
+          "ci",
+          "chore",
+          "revert"
+        ]
+      ],
+      "subject-case": [
+        2,
+        "always",
+        "sentence-case"
+      ],
+      "body-max-line-length": [
+        2,
+        "always",
+        100
+      ]
+    }
+  },
+  "license": "MIT"
+}
