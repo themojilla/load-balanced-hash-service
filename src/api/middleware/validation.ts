@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { HashAlgorithm } from '../../services/hash/types.js';
+import type { HashAlgorithm } from '../../services/hash/types.js';
 
 export const validateHashRequest = (
   req: Request,

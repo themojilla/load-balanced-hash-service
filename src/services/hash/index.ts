@@ -4,7 +4,7 @@ import { hashArgon2 } from './argon2.js';
 import { logger } from '../../utils/logger.js';
 import { HashAlgorithm, HashResult } from './types.js';
 
-export const hashText = async (
+const hashText = async (
   text: string,
   algorithm: HashAlgorithm
 ): Promise<HashResult> => {
@@ -44,3 +44,5 @@ export const hashText = async (
     throw error;
   }
 };
+
+export { HashAlgorithm, hashText };
