@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
-import { hashText, HashAlgorithm } from '../../services/hash/index.js';
+import { hashText } from '../../services/hash/index.js';
+import { HashAlgorithm } from '../../services/hash/types.js';
 import { validateHashRequest } from '../middleware/validation.js';
 import { logger } from '../../utils/logger.js';
 import { HashRequest, HashResponse } from '../types.js';

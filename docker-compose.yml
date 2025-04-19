@@ -1,0 +1,54 @@
+services:
+  hash-server-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3000
+      - SERVER_ID=server1
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - hash-network
+
+  hash-server-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3000
+      - SERVER_ID=server2
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - hash-network
+
+  hash-server-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3000
+      - SERVER_ID=server3
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - hash-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./hash-service.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - hash-server-1
+      - hash-server-2
+      - hash-server-3
+    restart: unless-stopped
+    networks:
+      - hash-network
+
+networks:
+  hash-network:
+    driver: bridge

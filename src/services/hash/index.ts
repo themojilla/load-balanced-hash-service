@@ -45,4 +45,4 @@ const hashText = async (
   }
 };
 
-export { HashAlgorithm, hashText };
+export { hashText };
