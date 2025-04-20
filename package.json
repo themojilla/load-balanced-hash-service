@@ -7,7 +7,8 @@
     "start": "node dist/index.js",
     "build:ts": "tsc -p tsconfig.json",
     "lint:format": "npx prettier --write",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:all": "./performance-tests/run-test.sh"
   },
   "dependencies": {
     "argon2": "^0.41.1",
@@ -17,6 +18,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
+    "@types/autocannon": "^7.12.6",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.10",
     "autocannon": "^8.0.0",

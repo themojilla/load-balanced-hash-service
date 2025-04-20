@@ -1,6 +1,6 @@
 # Load Balanced Hash Service
 
-A scalable and performant text hashing web service with load balancing capabilities.
+A high-performance, scalable text hashing web service with automatic load balancing capabilities.
 
 ## Project Overview
 
@@ -79,6 +79,8 @@ GET /health
 
 - Docker
 - Docker Compose
+- Node.js 22+ (for local development)
+- pnpm (for local development)
 
 ### Installation
 
@@ -87,12 +89,6 @@ GET /health
 ```bash
 git clone https://github.com/themojilla/load-balanced-hash-service.git
 cd load-balanced-hash-service
-```
-
-2. Create the necessary directory structure:
-
-```bash
-mkdir -p config/nginx
 ```
 
 ### Running with Docker
@@ -110,15 +106,13 @@ This will:
 - Start an Nginx container configured for load balancing
 - Make the service available at http://localhost:8080
 
-#### View logs from all containers:
+#### View logs:
 
 ```bash
+# All containers
 docker-compose logs -f
-```
 
-#### View logs from a specific container:
-
-```bash
+# Specific container
 docker-compose logs -f nginx
 docker-compose logs -f hash-server-1
 ```
@@ -129,13 +123,13 @@ docker-compose logs -f hash-server-1
 docker-compose down
 ```
 
-#### Rebuild and restart containers after code changes:
+#### Rebuild after code changes:
 
 ```bash
 docker-compose up -d --build
 ```
 
-### Development Mode (without Docker)
+### Development Mode
 
 For local development without Docker:
 
@@ -144,33 +138,38 @@ pnpm install
 pnpm dev
 ```
 
-### How the Docker Setup Works
-
-The Docker Compose configuration sets up a complete environment with:
-
-1. **Multiple Hash Service Instances**:
-
-   - Three independent containers running your hash service
-   - Each has a unique **SERVER_ID** for identification
-   - All containers run in the same Docker network
-
-2. **Nginx Load Balancer**:
-
-   - Proxies requests to the three hash service instances
-   - Uses round-robin load balancing by default
-   - Configured with health checks and error handling
-   - Maps port 8080 from your host to the Nginx container
-
-3. **Docker Network**:
-   - All containers run in a shared bridge network
-   - Enables service discovery by container name
-   - Isolates the application stack from other Docker services
-
 ## Performance Testing
 
-### Load Testing with Autocannon
+The project includes a comprehensive performance testing suite that evaluates the service's behavior under various load conditions.
 
-Run manual tests with autocannon against the Docker setup:
+### Running Performance Tests
+
+Run all tests with a single command:
+
+```bash
+pnpm build:ts
+pnpm test:all
+```
+
+This executes:
+
+1. **High Concurrency Test**: Tests the service with 100 concurrent connections
+2. **Stress Test**: Progressively increases load from 50 to 1000 connections
+
+### Test Results
+
+The tests measure:
+
+- Requests per second
+- Average latency
+- P99 latency (99th percentile)
+- Error rate
+- Total number of requests
+- Number of timeouts
+
+### Manual Testing with Autocannon
+
+You can also run custom load tests:
 
 ```bash
 # Basic test
@@ -179,9 +178,13 @@ npx autocannon -c 100 -d 10 -m POST \
   -H "Content-Type: application/json" \
   http://localhost:8080/api/hash
 
-# Testing with Argon2 (more CPU intensive)
+# Test with Argon2 (CPU intensive)
 npx autocannon -c 50 -d 20 -m POST \
   -b '{"text":"test string","algorithm":"argon2"}' \
   -H "Content-Type: application/json" \
   http://localhost:8080/api/hash
 ```
+
+## Load Balancing Strategy
+
+The Nginx load balancer uses a round-robin strategy to distribute requests evenly across the three hash service instances. Each server is given equal weight, ensuring balanced resource utilization.

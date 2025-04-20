@@ -24,6 +24,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.6.0
         version: 19.8.0
+      '@types/autocannon':
+        specifier: ^7.12.6
+        version: 7.12.6
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.1
@@ -294,6 +297,9 @@ packages:
   '@phc/format@1.0.0':
     resolution: {integrity: sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==}
     engines: {node: '>=10'}
+
+  '@types/autocannon@7.12.6':
+    resolution: {integrity: sha512-eBluTewWVKr1XlCPz3hYuzs+5JPme+Jh01sKpGPSnWg4wep1Oz2hpGn+dmcITl+uxYoV+rnhA+8LMengL+zcVw==}
 
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
@@ -1569,6 +1575,10 @@ snapshots:
       minimist: 1.2.8
 
   '@phc/format@1.0.0': {}
+
+  '@types/autocannon@7.12.6':
+    dependencies:
+      '@types/node': 22.14.0
 
   '@types/body-parser@1.19.5':
     dependencies:
